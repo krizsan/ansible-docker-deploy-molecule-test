@@ -25,7 +25,7 @@ Please refer to the Molecule test for an example showing how to use the role.
 License
 -------
 
-BSD
+Apache-2.0
 
 Author Information
 ------------------
