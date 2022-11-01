@@ -1,0 +1,19 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Deploy Docker containers"
+      ansible.builtin.include_role:
+        name: "deploy"
+      vars:
+        deployments:
+          - {
+            docker_image: "busybox:latest",
+            container_name: "container1",
+            container_command: ["date", "+%y%m%d"]
+          }
+          - {
+            docker_image: "busybox:latest",
+            container_name: "container2",
+            container_command: [ "date", "+%d%m%y %H:%M" ]
+          }

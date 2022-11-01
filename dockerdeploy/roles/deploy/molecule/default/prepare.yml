@@ -1,0 +1,15 @@
+---
+- name: Tests preparation playbook
+  hosts: all
+  tasks:
+    # Pip is required to install the Docker SDK for Python below.
+    - name: Install pip
+      ansible.builtin.apt:
+        name: python3-pip
+        state: present
+    # Docker SDK for Python (https://pypi.org/project/docker/) is required by community.docker.docker_container.
+    - name: Install Docker SDK for Python
+      ansible.builtin.pip:
+        name: docker
+        executable: pip3
+        state: latest

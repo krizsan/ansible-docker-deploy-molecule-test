@@ -1,0 +1,15 @@
+# Verifies the container logs for one container and makes it possible to loop over
+# multiple tasks, i.e. the tasks in this file.
+---
+- name: Obtain the expected result from running the date command on the control node
+  ansible.builtin.shell: date {{ item.date_command_params }}
+  register: expected_date_result
+  delegate_to: localhost
+- name: Retrieve the actual result from the Docker container logs
+  ansible.builtin.command: "docker logs {{ item.container_name }}"
+  register: container_logs
+- name: Verify that the result from the container is the expected
+  ansible.builtin.assert:
+    that: "'{{ expected_date_result.stdout }}' == '{{ container_logs.stdout }}'"
+    fail_msg: "The actual result '{{ container_logs.stdout }}' does NOT match the actual result '{{ expected_date_result.stdout }}'"
+    success_msg: "The actual and expected results matches! The value is: '{{ container_logs.stdout }}'"

@@ -1,0 +1,13 @@
+# Deploys one or more Docker containers specified by the supplied deployments list.
+# Please refer to a converge.yml in a Molecule role test for example on how to invoke this role.
+#
+# docker_image - Docker image that will be used to create the container to be deployed.
+# container_name - Name that the deployed container will have.
+# container_command - Command to be executed in the container immediately after it has been deployed.
+---
+- name: Deploys one or more Docker containers
+  community.docker.docker_container:
+    name: "{{ item.container_name }}"
+    image: "{{ item.docker_image }}"
+    command: "{{ item.container_command }}"
+  loop: "{{ deployments }}"

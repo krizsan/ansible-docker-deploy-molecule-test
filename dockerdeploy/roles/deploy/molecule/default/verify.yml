@@ -1,0 +1,11 @@
+---
+# Verifies the logs produced by the Docker containers deployed by the test.
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Retrieve and verify logs of one container
+      ansible.builtin.include_tasks: verify_container_logs.yml
+      loop:
+        - { container_name: "container1", date_command_params: "'+%y%m%d'"}
+        - { container_name: "container2", date_command_params: "-u '+%d%m%y %H:%M'"}
